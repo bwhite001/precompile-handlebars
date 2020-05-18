@@ -1,0 +1,7 @@
+{
+    "name": "testing-handlebars-precompile",
+    "version": "1.0.0",
+    "dependencies": {
+        "precompile-handlebars": "git+https://github.com/ixa-devstuff/precompile-handlebars.git#master"
+    }
+}
