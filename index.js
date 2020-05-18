@@ -24,14 +24,14 @@ const async = require('async');
 const mkdirp = require('mkdirp');
 const Handlebars = require('handlebars');
 
-const preFile = 'this["Handlebars"] = this["Handlebars"] || {};\n\
-this["Handlebars"]["templates"] = this["Handlebars"]["templates"] || {};\n\n';
-const preTemplate1 = 'this["Handlebars"]["templates"]["';
-const preTemplate2 = '"] = Handlebars.template(';
+const preFile = 'this["App"] = this["App"] || {};\n\
+this["App"]["templates"] = this["App"]["templates"] || {};\n\n';
+const preTemplate1 = 'this["App"]["templates"]["';
+const preTemplate2 = '"] = App.template(';
 const postTemplate = ');\n\n';
 
-const prePartialTemplate1 = 'Handlebars.registerPartial("';
-const prePartialTemplate2 = '", Handlebars.template(';
+const prePartialTemplate1 = 'App.registerPartial("';
+const prePartialTemplate2 = '", App.template(';
 const postPartial = '));\n\n';
 
 function CompileHandlebars(options) {
