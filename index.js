@@ -27,11 +27,11 @@ const Handlebars = require('handlebars');
 const preFile = 'this["App"] = this["App"] || {};\n\
 this["App"]["templates"] = this["App"]["templates"] || {};\n\n';
 const preTemplate1 = 'this["App"]["templates"]["';
-const preTemplate2 = '"] = App.template(';
+const preTemplate2 = '"] = Handlebars.template(';
 const postTemplate = ');\n\n';
 
-const prePartialTemplate1 = 'App.registerPartial("';
-const prePartialTemplate2 = '", App.template(';
+const prePartialTemplate1 = 'Handlebars.registerPartial("';
+const prePartialTemplate2 = '", Handlebars.template(';
 const postPartial = '));\n\n';
 
 function CompileHandlebars(options) {
