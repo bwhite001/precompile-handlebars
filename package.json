@@ -1,6 +1,6 @@
 {
     "name": "precompile-handlebars",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "A webpack plug-in to precompile handlebar templates directories into concatenated files",
     "main": "index.js",
     "scripts": {
@@ -14,9 +14,9 @@
     ],
     "license": "MIT",
     "dependencies": {
-        "async": "^3.2.0",
+        "async": "^2.1.5",
         "handlebars": "4.0.6",
-        "mkdirp": "^1.0.4"
+        "mkdirp": "^0.5.1"
     },
     "repository": {
         "type": "git",
