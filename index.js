@@ -37,7 +37,7 @@ const postPartial = '));\n\n';
 function CompileHandlebars(options) {
     let tasks = Array.isArray(options) ? options : [options];
 
-    this.options = tasks.map(function (taskOptions) {
+    this.options = tasks.map(function(taskOptions) {
         return extend({
             inputDir: "templates",
             outputFile: "output/compiled-templates.js"
@@ -45,13 +45,13 @@ function CompileHandlebars(options) {
     });
 }
 
-CompileHandlebars.prototype.apply = function (compiler) {
+CompileHandlebars.prototype.apply = function(compiler) {
     let plugin = this;
     console.log("CompileHandlebars plugin is loading... " + JSON.stringify(plugin.options));
 
-    compiler.plugin('run', function (compilation, callback) {
+    compiler.plugin('run', function(compilation, callback) {
         async.parallel(plugin.options.map(function (options) {
-            return function (cb) {
+            return function(cb) {
                 doTask(options, cb);
             }
         }), callback);
@@ -59,46 +59,48 @@ CompileHandlebars.prototype.apply = function (compiler) {
 
     function doTask(options, callback) {
         let index = 0;
-        let outputFile = path.join(options.inputDir, options.outputFile);
+
+        // const oldOutput = path.join(options.inputDir, options.outputFile);
+        // console.log({oldOutput});
+        // let outputFile = path.join(options.inputDir, options.outputFile);
+        let outputFile = options.outputFile;
 
         async.series([
-            function (cb) {
+            function(cb) {
                 let outputDirectory = outputFile.match(/(.*)\/.*/)[1];
-                console.log("outputFile " + outputFile + " outputDirectory " + outputDirectory);
+                console.log("outputFile " + outputFile + " inputDirectory " + options.inputDir);
                 mkdirp(outputDirectory, function (err) {
                     if (err) console.error(err);
                     return cb(err);
                 });
             },
-            function (cb) {
-                fs.writeFile(outputFile, preFile, function (err) {
+            function(cb) {
+                fs.writeFile(outputFile, preFile, function(err) {
                     return cb(err);
                 })
             },
-            function (cb) {
-                fs.readdir(options.inputDir, function (err, files) {
+            function(cb) {
+                fs.readdir(options.inputDir , function( err, files ) {
                     if (err) {
                         console.error("Failed to read directory");
                         return;
                     }
-                    files = files.filter(function (item) {
-                        return /^.*\.handlebars/.test(item);
-                    });
+                    files = files.filter(function(item) {return /^.*\.hbs/.test(item);});
                     console.log("Number of templates to process: " + files.length);
-                    async.whilst(function () {
+                    async.whilst(function() {
                         return index < files.length;
-                    }, function (cb) {
+                    }, function(cb) {
                         let fileName = files[index], shortFileName = fileName.match(/(.*)\..*/)[1];
                         let input = path.join(options.inputDir, fileName);
                         if (!fs.lstatSync(input).isFile()) {
-                            setTimeout(function () {
-                                index++;
+                            setTimeout(function() {
+                                index ++;
                                 cb();
                             }, 0);
                             return;
                         }
-                        console.log(input);
-                        fs.readFile(input, 'utf8', function (err, data) {
+                        // console.log(input);
+                        fs.readFile(input, 'utf8', function (err,data) {
                             if (err) {
                                 console.log(err);
                                 return cb(err);
@@ -107,19 +109,20 @@ CompileHandlebars.prototype.apply = function (compiler) {
                             if (shortFileName[0] === '_') {
                                 // handling partial
                                 templateSpec = prePartialTemplate1 + shortFileName.slice(1) + prePartialTemplate2 + templateSpec + postPartial;
-                            } else {
+                            }
+                            else {
                                 templateSpec = preTemplate1 + shortFileName + preTemplate2 + templateSpec + postTemplate;
                             }
-                            console.log(templateSpec);
+                            // console.log(templateSpec);
                             fs.appendFile(outputFile, templateSpec, function (err) {
-                                index++;
+                                index ++;
                                 cb(err);
                             });
                         });
                     }, cb);
                 });
             },
-            function (cb) {
+            function(cb) {
                 console.log("Precompiled " + index + " templates from " + options.inputDir + " to " + options.outputFile);
                 cb();
             }

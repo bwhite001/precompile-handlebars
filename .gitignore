@@ -3,3 +3,4 @@ node_modules
 example/dist
 example/templates/output
 /example/
+/package-lock.json
