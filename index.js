@@ -49,7 +49,7 @@ CompileHandlebars.prototype.apply = function(compiler) {
     let plugin = this;
     console.log("CompileHandlebars plugin is loading... " + JSON.stringify(plugin.options));
 
-    compiler.plugin('run', function(compilation, callback) {
+    compiler.hooks.done.tap('run', function(compilation, callback) {
         async.parallel(plugin.options.map(function (options) {
             return function(cb) {
                 doTask(options, cb);
