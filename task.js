@@ -45,7 +45,11 @@ class HandlebarTask extends Task {
 
     compile() {
         const files = this.glob.sync(this.src + '/' + '/^.*\\.hbs/');
-        if (!fs.lstatSync(this.dist_file).isFile()) {
+        try {
+            if(!fs.existsSync(this.dist_file)) {
+                fs.writeFileSync(this.dist_file, preFile)
+            }
+        } catch(e) {
             throw new Error(
                 `could not create file at ${this.dist_file}: ${e.message || e}`
             );
