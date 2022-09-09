@@ -8,15 +8,15 @@
     },
     "author": "Robert Wilde <rwilde@infoxchange.org>",
     "keywords": [
-        "webpack",
+        "laravel-mix",
         "handlebars",
         "precompile"
     ],
     "license": "MIT",
     "dependencies": {
-        "async": "^2.1.5",
-        "handlebars": "^4.2.2",
-        "mkdirp": "^0.5.1"
+        "glob": "^8.0.3",
+        "laravel-mix": "^6.0.49",
+        "handlebars": "^4.7.7"
     },
     "repository": {
         "type": "git",

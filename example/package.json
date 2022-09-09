@@ -1,7 +1,14 @@
 {
     "name": "testing-handlebars-precompile",
+    "private": true,
     "version": "1.0.0",
+    "scripts": {
+        "mix": "mix"
+    },
     "dependencies": {
-        "precompile-handlebars": "git+https://github.com/ixa-devstuff/precompile-handlebars.git#master"
+        "precompile-handlebars": "git+https://github.com/bwhite001/precompile-handlebars.git#master",
+        "glob": "^8.0.3",
+        "laravel-mix": "^6.0.49",
+        "handlebars": "^4.7.7"
     }
 }

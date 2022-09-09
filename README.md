@@ -1,23 +1,7 @@
-<div align="center"><img src="https://capriza.github.io/images/logos/logos-turtle.svg" height="128" /></div>
-
-
 precompile-handlebars
 ===
 
 A webpack plug-in to precompile handlebar templates directories into concatenated files.
-
-## Why
-
-Migrating from grunt-based bundling to webpack-based bundling often causes issues converting 
-a bunch of tasks from the the grunt way of doing things to a new one.
-
-One of these tasks is precompilation of handlbars templates. Most webpack handlebars packages let you load and compile templates
-only at runtime as part of your webpack.config.js loaders section.
-However, for those interested in precompiling their templates and concatenate them to a single file there is
-no easy solution.
-
-The __precompile-handlebars__ plug-in for webpack leverages the handlebars package by reading through a directory containing 
-handlebar templates to create a single, precompiled handlebars js file.
 
 ## Installation
 
@@ -35,26 +19,13 @@ You can provide an object or an array of objects containing the following precom
 Template files names that are prefixed with an underscore are treated as partials (i.e., `_partial1.handlebars`).
 
 ### Example
+in your webpack.mix.js
 
 ```javascript
-var webpack = require('webpack');
-var HandlebarsPlugin = require('precompile-handlebars');
+mix.combine(npm_dir + "/handlebars/dist/handlebars.runtime.js", publicPath + "/js/lib.js")
+mix.handlebars("resources/views/templates", publicPath + "/js/templates.js")
+.version([publicPath + "/js/templates.js"]);
 
-module.exports = {
-  ...
-      plugins: [
-        new HandlebarsPlugin([
-            {
-                inputDir: "templates",
-                outputFile: "output/compiled-templates.js"
-            },
-            {
-                inputDir: "my-other-templates",
-                outputFile: "output/my-other-compiled-templates.js"
-            }
-        ])
-    ],
-}
 ```
 
 ## License
