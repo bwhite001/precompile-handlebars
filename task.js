@@ -76,7 +76,6 @@ class HandlebarTask extends Task {
         } else {
             templateSpec = preTemplate1 + shortFileName + preTemplate2 + templateSpec + postTemplate;
         }
-        // console.log(templateSpec);
         fs.appendFileSync(this.dist_file, templateSpec);
     }
 }
