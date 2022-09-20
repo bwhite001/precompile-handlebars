@@ -21,7 +21,6 @@ class LaravelMixHandlebars {
             task.run();
         })
         Mix.api.js(config.outputFile, config.outputFile);
-
     }
 }
 

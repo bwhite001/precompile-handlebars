@@ -50,7 +50,7 @@ class HandlebarTask extends Task {
         const files = fs.readdirSync(this.src);
         for (const file of files) {
             try {
-                if(path.extname(file) != ".hbs"){
+                if(path.extname(file) != ".hbs" && path.extname(file) != ".handlebars") {
                     continue;
                 }
                 let fileName = file, shortFileName = path.parse(file).name;

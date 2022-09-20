@@ -3,7 +3,7 @@ const mix = require("laravel-mix");
 require("./");
 
 const npm = "node_modules";
-const publicPath = "dist";
+const publicPath = "test/dist";
 
 
 // handle the import of the Handlebars runtime and precompile of the templates with versioning
