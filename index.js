@@ -1,9 +1,8 @@
 let mix = require("laravel-mix");
-const HandlebarTask = require("./task");
+const LaravelMixHandlebarsWebpack = require("./plugin");
 
 class LaravelMixHandlebars {
     dependencies() {
-        this.requiresReload = true;
         return ["fs","path","handlebars"];
     }
     name () {
@@ -11,16 +10,15 @@ class LaravelMixHandlebars {
     }
 
     register(inputDir, outputFile) {
-        const config =
-            {
-                inputDir: inputDir,
-                outputFile: outputFile
-            };
-        Mix.api.before(() => {
-            let task = new HandlebarTask(config);
-            task.run();
-        })
-        Mix.api.js(config.outputFile, config.outputFile);
+        this.config =
+        {
+            inputDir: inputDir,
+            outputFile: outputFile
+        };
+    }
+
+    webpackPlugins() {
+        return new LaravelMixHandlebarsWebpack(this.config);
     }
 }
 

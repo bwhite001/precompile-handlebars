@@ -8,4 +8,4 @@ const publicPath = "test/dist";
 
 // handle the import of the Handlebars runtime and precompile of the templates with versioning
 mix.combine(npm + "/handlebars/dist/handlebars.runtime.js", publicPath + "/handlebars.js");
-mix.handlebars("test/templates", publicPath + "/demo.js");
+mix.handlebars("test/templates", publicPath + "/demo_templates.js")
