@@ -187,6 +187,7 @@ class HandlebarsRenderPlugin {
             const outputPath = compilation.compiler.outputPath;
             Object.keys(this.HB.assetsToEmit).forEach(filename => {
                 //Adds to assets to track changes in webpack
+                // change the destination path relative to webpacks output folder and emit it via webpack
                 let targetFilepath = filename.replace(outputPath, "").replace(/^\/*/, "");
                 this.assetsToEmit[targetFilepath] = this.HB.assetsToEmit[filename];
             });
