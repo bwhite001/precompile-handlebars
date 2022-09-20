@@ -1,5 +1,5 @@
 let mix = require("laravel-mix");
-const LaravelMixHandlebarsWebpack = require("./plugin");
+const HandlebarsRenderPlugin = require("./plugin");
 
 class LaravelMixHandlebars {
     dependencies() {
@@ -18,7 +18,7 @@ class LaravelMixHandlebars {
     }
 
     webpackPlugins() {
-        return new LaravelMixHandlebarsWebpack(this.config);
+        return new HandlebarsRenderPlugin(this.config);
     }
 }
 
