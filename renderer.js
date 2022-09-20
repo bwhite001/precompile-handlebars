@@ -79,8 +79,7 @@ class HandlebarRenderer {
 
     saveToOutputFile(content) {
         try {
-            //fs.writeFileSync(this.dist_file, content);
-            this.assetsToEmit[this.output_file] = {
+            this.assetsToEmit[this.dist_file] = {
                 source: () => content,
                 size: () => content.length
             };
