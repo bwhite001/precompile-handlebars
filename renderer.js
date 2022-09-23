@@ -18,9 +18,11 @@ class HandlebarRenderer {
         this.plugin = plugin;
     }
 
-    run() {
-        this.assetsToEmit = this.plugin.assetsToEmit;
+    run(cwd) {
+        this.cwd = cwd;
+        this.assetsToEmit = {};
         this.precompile();
+        return this.assetsToEmit;
     }
 
     precompile() {
@@ -78,16 +80,12 @@ class HandlebarRenderer {
     }
 
     saveToOutputFile(content) {
-        try {
-            this.assetsToEmit[this.dist_file] = {
-                source: () => content,
-                size: () => content.length
-            };
-        } catch(e) {
-            throw new Error(
-                `could not save file at ${this.dist_file}: ${e.message || e}`
-            );
-        }
+        // change the destination path relative to webpacks output folder and emit it via webpack
+        let targetFilepath = this.dist_file.replace(this.cwd, "").replace(/^\/*/, "");
+        this.assetsToEmit[targetFilepath] = {
+            source: () => content,
+            size: () => content.length
+        };
     }
 }
 
