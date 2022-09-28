@@ -11,48 +11,41 @@ const prePartialTemplate1 = "Handlebars.registerPartial(\"";
 const prePartialTemplate2 = "\", Handlebars.template(";
 const postPartial = "));\n\n";
 
-class HandlebarRenderer {
-
-    constructor(options, plugin){
-        this.options = options;
-        this.plugin = plugin;
+class HandlebarRenderTask {
+    constructor(src_files, target_file) {
+        this.Handlebars = require("handlebars");
+        this.src_files = src_files;
+        this.target_file = target_file;
     }
 
-    run(cwd) {
-        this.cwd = cwd;
+
+    run(manifest) {
+        this.manifest = manifest;
         this.assetsToEmit = {};
         this.precompile();
-        return this.assetsToEmit;
     }
 
     precompile() {
-        const params = this.options;
-        this.src = path.resolve(params.inputDir);
-        this.output_file = params.outputFile;
-        this.dist_file = path.resolve(params.outputFile);
-        let outputDirectory = path.dirname(this.dist_file);
-        this.variables = params.variables;
+        let outputDirectory = path.dirname(this.target_file);
         if (!fs.existsSync(outputDirectory)) {
             fs.mkdirSync(outputDirectory, {recursive: true});
         }
-        else if (fs.existsSync(this.dist_file)) {
-            fs.rmSync(this.dist_file);
+        else if (fs.existsSync(this.target_file)) {
+            fs.rmSync(this.target_file);
         }
-        this.Handlebars = require("handlebars");
-        this.glob = require("glob");
         this.compile();
         this.saveToOutputFile(this.file_string);
+        return this.assetsToEmit;
     }
 
     compile() {
         this.file_string = preFile;
-        const files = fs.readdirSync(this.src);
-        for (const file of files) {
+        for (const file of this.src_files) {
             try {
                 if(path.extname(file) != ".hbs" && path.extname(file) != ".handlebars") {
                     continue;
                 }
-                this.plugin.addDependency(file);
+
                 let fileName = file, shortFileName = path.parse(file).name;
                 let input = path.join(this.src, fileName);
                 if (!fs.lstatSync(input).isFile()) {
@@ -89,4 +82,4 @@ class HandlebarRenderer {
     }
 }
 
-module.exports = HandlebarRenderer;
+module.exports = HandlebarRenderTask;

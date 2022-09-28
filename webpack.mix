@@ -3,9 +3,9 @@ const mix = require("laravel-mix");
 require("./");
 
 const npm = "node_modules";
-const publicPath = "test/dist";
+const publicPath = "dist";
 
-
+mix.setPublicPath(publicPath);
 // handle the import of the Handlebars runtime and precompile of the templates with versioning
-mix.combine(npm + "/handlebars/dist/handlebars.runtime.js", publicPath + "/handlebars.js");
-mix.handlebars("test/templates", publicPath + "/demo_templates.js")
+mix.combine(npm + "/handlebars/dist/handlebars.runtime.js", publicPath + "/js/handlebars.js");
+mix.handlebars("test/templates", publicPath + "/js/demo_templates.js")
