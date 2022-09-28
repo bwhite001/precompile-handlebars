@@ -1,25 +1,9 @@
 let mix = require("laravel-mix");
-const HandlebarsRenderPlugin = require("./plugin");
-
-class LaravelMixHandlebars {
-    dependencies() {
-        return ["fs","path","handlebars"];
-    }
-    name () {
-        return "Handlebars";
-    }
-
-    register(inputDir, outputFile) {
-        this.config =
-        {
-            inputDir: inputDir,
-            outputFile: outputFile
-        };
-    }
-
-    webpackPlugins() {
-        return new HandlebarsRenderPlugin(this.config);
-    }
-}
-
-mix.extend("handlebars", new LaravelMixHandlebars());
+let PrecompileHandlebarMixPlugin = require("./plugin");
+/**
+ * precompile handlebar templates into output file javascript and append
+ * corresponding values from the `mix-manifest.json`.
+ * @param {string} src_files A path to a source file. *.hbs and *.handlebar files
+ * @param {string} target_dir The target directory inside the public path.
+ */
+mix.extend("handlebars", PrecompileHandlebarMixPlugin);

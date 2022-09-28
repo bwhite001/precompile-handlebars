@@ -12,35 +12,25 @@ const prePartialTemplate2 = "\", Handlebars.template(";
 const postPartial = "));\n\n";
 
 class HandlebarRenderTask {
-    constructor(src_files, target_file) {
+    constructor(src_dir, files, output_file, context) {
+        this.mix = context;
         this.Handlebars = require("handlebars");
-        this.src_files = src_files;
-        this.target_file = target_file;
+        this.src = src_dir;
+        this.output_file = output_file;
+        this.files = files;
     }
 
 
-    run(manifest) {
-        this.manifest = manifest;
-        this.assetsToEmit = {};
-        this.precompile();
-    }
-
-    precompile() {
-        let outputDirectory = path.dirname(this.target_file);
-        if (!fs.existsSync(outputDirectory)) {
-            fs.mkdirSync(outputDirectory, {recursive: true});
-        }
-        else if (fs.existsSync(this.target_file)) {
-            fs.rmSync(this.target_file);
-        }
+    async run() {
+        this.assets = [];
         this.compile();
-        this.saveToOutputFile(this.file_string);
-        return this.assetsToEmit;
+        this.output_file.write(this.file_string);
+        this.assets.push(this.output_file);
     }
 
     compile() {
         this.file_string = preFile;
-        for (const file of this.src_files) {
+        for (const file of this.files) {
             try {
                 if(path.extname(file) != ".hbs" && path.extname(file) != ".handlebars") {
                     continue;
@@ -69,16 +59,8 @@ class HandlebarRenderTask {
         } else {
             templateSpec = preTemplate1 + shortFileName + preTemplate2 + templateSpec + postTemplate;
         }
-        return templateSpec;
-    }
 
-    saveToOutputFile(content) {
-        // change the destination path relative to webpacks output folder and emit it via webpack
-        let targetFilepath = this.dist_file.replace(this.cwd, "").replace(/^\/*/, "");
-        this.assetsToEmit[targetFilepath] = {
-            source: () => content,
-            size: () => content.length
-        };
+        return templateSpec;
     }
 }
 
