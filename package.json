@@ -1,6 +1,6 @@
 {
     "name": "precompile-handlebars",
-    "version": "2.1.1-4",
+    "version": "2.2.0",
     "description": "A webpack plug-in to precompile handlebar templates directories into concatenated files",
     "main": "src/index.js",
     "scripts": {
